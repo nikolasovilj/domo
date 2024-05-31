@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+
+import argparse
+import whois
+
+parser = argparse.ArgumentParser(description='Whois based domain monitoring tool')
+parser.add_argument('--config-file', '-C', type=str, help='file containing list of domains')
+args = parser.parse_args()
+#print(args.config_file)
+domains = []
+for domain in open(args.config_file, 'rt'):
+    #print(domain.strip())
+    domains.append(domain.strip())
+
+report = {}
+
+for domain in domains:
+    #print(domain)
+    w = whois.whois(domain)
+    try:
+        expiry_date=w['expiration_date'][0].isoformat().split("T")[0]
+        report.update({domain: expiry_date})
+    except:
+        expiry_date=w['expiration_date'].isoformat().split("T")[0]
+        report.update({domain: expiry_date})
+
+for k, v in report.items():
+    print(f"{k} expiry_date: {v}")
