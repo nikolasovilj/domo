@@ -5,3 +5,4 @@ Whois based domain monitoring tool
 
 TODO:
 - [ ] create a script to install cronjob
+- [ ] export it to PATH so you can run it as utility
